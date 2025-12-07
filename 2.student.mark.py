@@ -56,9 +56,9 @@ class School():
         for i, course in enumerate(self.__courses):
             print(f"{i + 1}: {course.get_name_course()} ({course.get_id_course()})")
         try:
-            course_choice = int(input("Make your choice mortal: "))
+            course_choice = int(input("Make your choice: "))
             if course_choice < 0 or course_choice > len(self.__courses):
-                print("Value is lol (invalid)")
+                print("Value is invalid")
                 return
             selected_course_id = self.__courses[course_choice - 1].get_id_course()
             self.__marks[selected_course_id] = {}
@@ -73,9 +73,9 @@ class School():
         for i, course in enumerate(self.__courses):
             print(f"{1 + i}: {course.get_name_course()} ({course.get_id_course()})")
         try:
-            course_choice = int(input("Make your choice creature: "))
+            course_choice = int(input("Make your choice: "))
             if course_choice < 0 or course_choice > len(self.__courses):
-                print("Value is lol (invalid)")
+                print("Value is invalid")
                 return
             selected_course = self.__courses[course_choice - 1].get_id_course()
             if selected_course in self.__marks:
@@ -85,7 +85,7 @@ class School():
                     mark = course_marks.get(student.get_id_student())
                     print(f"Student: {student.get_name_student()} ({student.get_id.student()}) => {mark}")
             else:
-                print("Course have no data")
+                print("No data of courses")
         except ValueError:
             print("Input error")
 
@@ -117,7 +117,7 @@ def main():
 4: List student info
 5: List course info
 6: List marks
-7: Exit (you don't appreciate my work >;c)
+7: Exit program
 """)
         get = input("Make your decision: ")
         if get == '1':
@@ -136,7 +136,7 @@ def main():
             print("Mayonnaise on the escalator, it's going upstairs, so see ya later!")
             break
         else:
-            print("You moron be making stupid input(s)")
+            print("Invalid input")
 
 if __name__ == "__main__":
     main()
