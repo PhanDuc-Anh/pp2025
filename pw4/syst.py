@@ -1,39 +1,8 @@
 import math
 import numpy
 import curses
-
-class Student():
-    def __init__(self, name, id, dob):
-        self.__name = name
-        self.__id = id
-        self.__dob = dob
-        self.__gpa = 0
-
-    def get_gpa(self):
-        return self.__gpa
-    def get_name_student(self):
-        return self.__name
-    def get_id_student(self):
-        return self.__id
-    def get_dob_student(self):
-        return self.__dob
-
-    def set_gpa(self, gpa):
-        self.__gpa = gpa
-
-
-class Course():
-    def __init__(self, name, id, credit):
-        self.__name = name
-        self.__id = id
-        self.__credit = credit
-
-    def get_name_course(self):
-        return self.__name
-    def get_id_course(self):
-        return self.__id
-    def get_credit_course(self):
-        return self.__credit
+from student import Student
+from course import Course
 
 
 class Sys():
@@ -294,80 +263,3 @@ class Sys():
 
             end_y = self.display_centered(lines, "Student List (Sorted by GPA)")
             self.wait_for_key(end_y)
-
-
-def draw_menu(stdscr, current_row):
-    stdscr.clear()
-    h, w = stdscr.getmaxyx()
-
-    menu = [
-        "Input Student Info",
-        "Input Course Info",
-        "Input Marks",
-        "List Students",
-        "List Courses",
-        "List Marks",
-        "Exit"
-    ]
-
-    title = "School System Terminal"
-    title_y = h // 2 - len(menu) // 2 - 4
-
-    stdscr.addstr(title_y, w // 2 - len(title) // 2 - 2, "=" * (len(title) + 4), curses.A_BOLD)
-    stdscr.addstr(title_y + 1, w // 2 - len(title) // 2 - 1, f" {title} ", curses.A_BOLD)
-    stdscr.addstr(title_y + 2, w // 2 - len(title) // 2 - 2, "=" * (len(title) + 4), curses.A_BOLD)
-
-    for idx, item in enumerate(menu):
-        x = w // 2 - len(item) // 2
-        y = h // 2 - len(menu) // 2 + idx
-        if idx == current_row:
-            stdscr.addstr(y, x - 2, f"> {item} <", curses.A_REVERSE | curses.A_BOLD)
-        else:
-            stdscr.addstr(y, x, item)
-
-    hint = "Use UP/DOWN arrows to navigate, ENTER to select"
-    stdscr.addstr(h - 2, w // 2 - len(hint) // 2, hint, curses.A_DIM)
-    stdscr.refresh()
-
-
-def main(stdscr):
-    curses.curs_set(0)
-    stdscr.keypad(True)
-
-    terminal = Sys(stdscr)
-    current_row = 0
-
-    while True:
-        draw_menu(stdscr, current_row)
-
-        key = stdscr.getch()
-
-        if key == curses.KEY_UP and current_row > 0:
-            current_row -= 1
-        elif key == curses.KEY_DOWN and current_row < 6:
-            current_row += 1
-        elif key == curses.KEY_ENTER or key in [10, 13]:
-            if current_row == 0:
-                terminal.input_student()
-            elif current_row == 1:
-                terminal.input_course()
-            elif current_row == 2:
-                terminal.input_marks()
-            elif current_row == 3:
-                terminal.list_student()
-            elif current_row == 4:
-                terminal.list_course()
-            elif current_row == 5:
-                terminal.list_marks()
-            elif current_row == 6:
-                stdscr.clear()
-                h, w = stdscr.getmaxyx()
-                msg = "Mayonnaise on the escalator, it's going upstairs, so see ya later!"
-                stdscr.addstr(h // 2, w // 2 - len(msg) // 2, msg, curses.A_BOLD)
-                stdscr.refresh()
-                stdscr.getch()
-                break
-
-
-if __name__ == "__main__":
-    curses.wrapper(main)
